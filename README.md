@@ -14,7 +14,7 @@ Now save the Connecting String to the Secrets Store
 ``` shell
 db_password="db-password-here"
 
-dotnet user-secrets set "ConnectionStrings:DbContext" "Host=postgres;Username=admin;Password=$db_password;Database=postgres"
+dotnet user-secrets set "ConnectionStrings:DbContext" "Host=localhost;Username=admin;Password=$db_password;Database=postgres"
 ```
 
 Verify the Connection String has been saved by using this command
