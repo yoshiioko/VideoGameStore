@@ -35,4 +35,15 @@ var app = builder.Build();
 
 app.MapGet("/games", () => games);
 
+app.MapGet("/games/{id}", (int id) =>
+{
+    Game? game = games.Find(game => game.Id == id);
+    if (game is null)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(game);
+});
+
 app.Run();
