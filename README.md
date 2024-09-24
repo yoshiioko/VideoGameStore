@@ -2,8 +2,29 @@
 
 ## Configuration
 
+### User Secrets
+Navigate to the directory of the project file. Run this command to initialize User Secrets.
+
+``` shell
+dotnet user-secrets init
+```
+
+Now save the Connecting String to the Secrets Store
+
+``` shell
+db_password="db-password-here"
+
+dotnet user-secrets set "ConnectionStrings:DbContext" "Host=postgres;Username=admin;Password=$db_password;Database=postgres"
+```
+
+Verify the Connection String has been saved by using this command
+
+```shell
+dotnet user-secrets list
+```
+
 ### .env
-Before deploying this setup, you need to configure the following values in the [.env](.env) file.
+Before deploying the docker image, you need to configure the following values in the [.env](.env) file.
 - POSTGRES_USER
 - POSTGRES_PW
 - POSTGRES_DB (can be default value)
