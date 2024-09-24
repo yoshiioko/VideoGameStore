@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using VideoGameStore.Api.Entities;
 
@@ -10,4 +11,9 @@ public class VideoGameStoreContext : DbContext
     }
 
     public DbSet<Game> Games => Set<Game>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
 }
