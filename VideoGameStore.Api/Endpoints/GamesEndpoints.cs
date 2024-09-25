@@ -33,7 +33,7 @@ public static class GamesEndpoints
                 Name = gameDto.Name,
                 Genre = gameDto.Genre,
                 Price = gameDto.Price,
-                ReleaseDate = gameDto.ReleaseDate,
+                ReleaseDate = gameDto.ReleaseDate.ToUniversalTime(),
                 ImageUri = gameDto.ImageUri
             };
 
@@ -53,7 +53,7 @@ public static class GamesEndpoints
             existingGame.Name = updatedGameDto.Name;
             existingGame.Genre = updatedGameDto.Genre;
             existingGame.Price = updatedGameDto.Price;
-            existingGame.ReleaseDate = updatedGameDto.ReleaseDate;
+            existingGame.ReleaseDate = updatedGameDto.ReleaseDate.ToUniversalTime();
             existingGame.ImageUri = updatedGameDto.ImageUri;
 
             repository.Update(existingGame);
