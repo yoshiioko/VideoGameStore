@@ -6,38 +6,38 @@ namespace VideoGameStore.Api.Repositories;
 
 public class EntityFrameworkGamesRepository : IGamesRepository
 {
-    private readonly VideoGameStoreContext dbContext;
+    private readonly VideoGameStoreContext _dbContext;
 
     public EntityFrameworkGamesRepository(VideoGameStoreContext dbContext)
     {
-        this.dbContext = dbContext;
+        _dbContext = dbContext;
     }
 
     public IEnumerable<Game> GetAll()
     {
-        return [.. dbContext.Games.AsNoTracking()];
+        return [.. _dbContext.Games.AsNoTracking()];
     }
 
     public Game? Get(int id)
     {
-        return dbContext.Games.Find(id);
+        return _dbContext.Games.Find(id);
     }
 
     public void Create(Game game)
     {
-        dbContext.Games.Add(game);
-        dbContext.SaveChanges();
+        _dbContext.Games.Add(game);
+        _dbContext.SaveChanges();
     }
 
     public void Update(Game updatedGame)
     {
-        dbContext.Update(updatedGame);
-        dbContext.SaveChanges();
+        _dbContext.Update(updatedGame);
+        _dbContext.SaveChanges();
     }
 
     public void Delete(int id)
     {
-        _ = dbContext.Games.Where(game => game.Id == id)
+        _ = _dbContext.Games.Where(game => game.Id == id)
                            .ExecuteDelete();
     }
 }
