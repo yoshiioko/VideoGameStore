@@ -31,7 +31,7 @@ public class EntityFrameworkGamesRepository : IGamesRepository
 
     public void Update(Game updatedGame)
     {
-        dbContext.Games.Update(updatedGame);
+        dbContext.Update(updatedGame);
         dbContext.SaveChanges();
     }
 
