@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using VideoGameStore.Api.Data;
 using VideoGameStore.Api.Endpoints;
 using VideoGameStore.Api.Repositories;
@@ -9,6 +10,8 @@ var connString = builder.Configuration.GetConnectionString("DbContext");
 builder.Services.AddNpgsql<VideoGameStoreContext>(connString);
 
 var app = builder.Build();
+
+app.Services.InitializeDb();
 
 app.MapGamesEndpoints();
 
