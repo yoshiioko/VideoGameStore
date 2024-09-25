@@ -1,13 +1,9 @@
-using Microsoft.EntityFrameworkCore;
 using VideoGameStore.Api.Data;
 using VideoGameStore.Api.Endpoints;
-using VideoGameStore.Api.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddSingleton<IGamesRepository, InMemGamesRepository>(); // Only use this while testing with InMemGamesRepository!
 
-var connString = builder.Configuration.GetConnectionString("DbContext");
-builder.Services.AddNpgsql<VideoGameStoreContext>(connString);
+builder.Services.AddRepositories(builder.Configuration);
 
 var app = builder.Build();
 
