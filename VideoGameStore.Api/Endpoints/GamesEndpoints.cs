@@ -15,12 +15,12 @@ public static class GamesEndpoints
 
         group.MapGet("/", (IGamesRepository repository) =>
         {
-            return repository.GetAll().Select(game => game.AsDto());
+            return repository.GetAllAsync().Select(game => game.AsDto());
         });
 
         group.MapGet("/{id}", (IGamesRepository repository, int id) =>
         {
-            Game? game = repository.Get(id);
+            Game? game = repository.GetAsync(id);
 
             return game is not null ? Results.Ok(game.AsDto()) : Results.NotFound();
         })
@@ -37,14 +37,14 @@ public static class GamesEndpoints
                 ImageUri = gameDto.ImageUri
             };
 
-            repository.Create(game);
+            repository.CreateAsync(game);
 
             return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.Id }, game);
         });
 
         group.MapPut("/{id}", (IGamesRepository repository, int id, UpdateGameDto updatedGameDto) =>
         {
-            Game? existingGame = repository.Get(id);
+            Game? existingGame = repository.GetAsync(id);
             if (existingGame is null)
             {
                 return Results.NotFound();
@@ -56,17 +56,17 @@ public static class GamesEndpoints
             existingGame.ReleaseDate = updatedGameDto.ReleaseDate.ToUniversalTime();
             existingGame.ImageUri = updatedGameDto.ImageUri;
 
-            repository.Update(existingGame);
+            repository.UpdateAsync(existingGame);
 
             return Results.NoContent();
         });
 
         group.MapDelete("/{id}", (IGamesRepository repository, int id) =>
         {
-            Game? game = repository.Get(id);
+            Game? game = repository.GetAsync(id);
             if (game is not null)
             {
-                repository.Delete(id);
+                repository.DeleteAsync(id);
             }
 
             return Results.NoContent();
