@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace VideoGameStore.Api.Authorization;
@@ -6,7 +7,8 @@ public static class AuthorizationExtensions
 {
     public static IServiceCollection AddVideoGameStoreAuthorization(this IServiceCollection services)
     {
-        services.AddAuthorization(options =>
+        services.AddScoped<IClaimsTransformation, ScopeTransformation>()
+                .AddAuthorization(options =>
         {
             options.AddPolicy(Policies.ReadAccess, builder =>
             builder.RequireClaim("scope", "games:read")
