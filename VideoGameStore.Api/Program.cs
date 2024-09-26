@@ -5,7 +5,10 @@ using VideoGameStore.Api.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRepositories(builder.Configuration);
-builder.Services.AddAuthentication().AddJwtBearer();
+builder.Services.AddAuthentication()
+                .AddJwtBearer() // Default scheme using local tool for tokens
+                .AddJwtBearer("Auth0"); // Enable Auth0
+
 builder.Services.AddVideoGameStoreAuthorization();
 builder.Services.AddApiVersioning(options =>
 {

@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 namespace VideoGameStore.Api.Authorization;
 
 public static class AuthorizationExtensions
@@ -6,10 +8,14 @@ public static class AuthorizationExtensions
     {
         services.AddAuthorization(options =>
         {
-            options.AddPolicy(Policies.ReadAccess, builder => builder.RequireClaim("scope", "games:read"));
+            options.AddPolicy(Policies.ReadAccess, builder =>
+            builder.RequireClaim("scope", "games:read")
+                   .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme, "Auth0")); // Enable using Auth0 schemes
 
-            options.AddPolicy(Policies.WriteAccess, builder => builder.RequireClaim("scope", "games:write")
-                                                                      .RequireRole("Admin"));
+            options.AddPolicy(Policies.WriteAccess, builder =>
+            builder.RequireClaim("scope", "games:write")
+                   .RequireRole("Admin")
+                   .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme, "Auth0")); // Enable using Auth0 schemes);
         });
 
         return services;
