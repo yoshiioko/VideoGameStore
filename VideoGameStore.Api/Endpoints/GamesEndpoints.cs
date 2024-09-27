@@ -24,10 +24,10 @@ public static class GamesEndpoints
             [AsParameters] GetGamesDtoV1 request,
             HttpContext http) =>
         {
-            var totalCount = await repository.CountAsync();
+            var totalCount = await repository.CountAsync(request.Filter);
             http.Response.AddPaginationHeader(totalCount, request.PageSize);
 
-            return (await repository.GetAllAsync(request.PageNumber, request.PageSize)).Select(game => game.AsDtoV1());
+            return (await repository.GetAllAsync(request.PageNumber, request.PageSize, request.Filter)).Select(game => game.AsDtoV1());
         })
         .MapToApiVersion(1.0);
 
@@ -47,10 +47,10 @@ public static class GamesEndpoints
             [AsParameters] GetGamesDtoV2 request,
             HttpContext http) =>
         {
-            var totalCount = await repository.CountAsync();
+            var totalCount = await repository.CountAsync(request.Filter);
             http.Response.AddPaginationHeader(totalCount, request.PageSize);
 
-            return (await repository.GetAllAsync(request.PageNumber, request.PageSize)).Select(game => game.AsDtoV2());
+            return (await repository.GetAllAsync(request.PageNumber, request.PageSize, request.Filter)).Select(game => game.AsDtoV2());
         })
         .MapToApiVersion(2.0);
 
