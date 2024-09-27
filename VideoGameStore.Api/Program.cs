@@ -32,18 +32,6 @@ await app.Services.InitializeDb();
 app.MapGamesEndpoints();
 app.UseCors();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        foreach (var description in app.DescribeApiVersions())
-        {
-            var url = $"/swagger/{description.GroupName}/swagger.json";
-            var name = description.GroupName.ToUpperInvariant();
-            options.SwaggerEndpoint(url, name);
-        }
-    });
-}
+app.UseGameStoreSwagger();
 
 app.Run();
